@@ -64,6 +64,30 @@ body {
 .tasks {
   flex: 1 1 80%;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+
+    &:not(:first-child) {
+      margin-top: 40px;
+    }
+  }
+
+  & h2 {
+    flex: 1 0 auto;
+    font-size: 36px;
+    text-align: center;
+  }
+
+  &__count {
+    padding: 8px;
+    border-radius: 10px;
+    background-color: $grey;
+    min-width: 36px;
+    text-align: center;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -72,10 +96,17 @@ body {
 
   &__item {
     display: flex;
+    align-items: center;
+    gap: 20px;
     box-shadow: $shadow;
     background: $grey;
     padding: 15px;
     border-radius: 10px;
+  }
+
+  &__info {
+    display: flex;
+    width: 100%;
   }
 
   &__title {
@@ -86,23 +117,84 @@ body {
     border-right: 1px solid #9c9c9c;
   }
 
+  &__descr {
+    flex: 0 1 75%;
+  }
+
+  &__btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__delete {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
 }
 
-h1 {
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 40px;
+// Custom checkbox
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+
+  & input {
+    display: none;
+    position: absolute;
+  }
 }
+
+.checkbox {
+  cursor: pointer;
+  transition: 0.5s;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: $grey;
+  border: 1px solid #000;
+
+  &:hover {
+    border: 1px solid $orange;
+    background: $orange;
+  }
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  object-fit: contain;
+  display: none;
+}
+
+.custom-checkbox input:checked~.checkbox .checkmark {
+  display: block;
+}
+
+.custom-checkbox input:checked~.checkbox {
+  border: none;
+  background: $orange;
+}
+
+// Media
 
 @media (max-width: 767px) {
   .container {
     flex-direction: column;
   }
 
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
 
   body {
     font-size: 14px;
@@ -113,21 +205,46 @@ h1 {
     margin-bottom: 20px;
   }
 
-  .tasks__title {
-    min-width: 150px;
+  .tasks {
+    & h2 {
+      font-size: 24px;
+    }
+
+    &__title {
+      min-width: 150px;
+    }
+
+    &__header {
+      margin-bottom: 20px;
+
+      &:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+
+    &__count {
+      min-width: 32px;
+    }
   }
 }
 
 @media (max-width: 479px) {
   .tasks {
-    &__item {
+    &__info {
       flex-direction: column;
-      row-gap: 15px;
+      gap: 12px;
     }
 
     &__title {
       text-decoration: underline;
       border: none;
+
+    }
+
+    &__descr {}
+
+    &__btns {
+      flex-direction: column;
     }
   }
 }

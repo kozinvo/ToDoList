@@ -15,20 +15,19 @@
   <div class="container">
 
     <div class="new-task">
-      <input class="new-task__title" type="text" placeholder="Title">
-      <!-- <input class="new-task__description" type="text" placeholder="Description"> -->
-      <textarea class="new-task__description" placeholder="Description"></textarea>
-      <button class="new-task__btn">Add task</button>
+      <input id='title' class="new-task__title" type="text" placeholder="Title">
+      <input id='description' class="new-task__description" type="text" placeholder="Description">
+      <!-- <textarea class="new-task__description" placeholder="Description"></textarea> -->
+      <button id='addTaskBtn' class="new-task__btn">Add task</button>
     </div>
 
     <div class="tasks">
       <div class="tasks__header">
         <h2>List Tasks</h2>
-        <span class="tasks__count">4</span>
+        <span id='count' class="tasks__count">4</span>
       </div>
-      <div class="tasks__wrapper">
-
-        <div class="tasks__item">
+      <div id='tasks' class="tasks__wrapper">
+        <!-- <div class="tasks__item">
           <div class="tasks__info">
             <p class="tasks__title">Title1</p>
             <p class="tasks__descr">Description 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti
@@ -193,13 +192,13 @@
               </svg>
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="tasks__header">
         <h2>Finished Tasks</h2>
-        <span class="tasks__count">2</span>
+        <span id='finished-count' class="tasks__count">2</span>
       </div>
-      <div class="tasks__wrapper finished">
+      <div id='finished' class="tasks__wrapper finished">
         <div class="tasks__item">
           <div class="tasks__info">
             <p class="tasks__title">Title5</p>
@@ -284,9 +283,8 @@
         </div>
       </div>
     </div>
-
-
   </div>
+  <script src="script.js"></script>
 </body>
 
 </html>

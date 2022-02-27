@@ -49,11 +49,6 @@ body {
   height: 40px;
 }
 
-.new-task__description {
-  height: 100px;
-  resize: none;
-}
-
 .new-task__btn {
   color: #e4e4e4;
   padding: 10px;

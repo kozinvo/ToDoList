@@ -1,6 +1,11 @@
 let addTaskBtn = document.getElementById('addTaskBtn');
+const tasksWrapper = document.querySelector('#tasks');
+const tasksCount = document.querySelector('#count');
+const finishedWrapper = document.querySelector('#finished');
+const finishedCount = document.querySelector('#finished-count');
 
-let tasksCollection = [{
+
+let tasksArray = [{
     title: 'do homework',
     description: 'learn js'
   },
@@ -10,8 +15,12 @@ let tasksCollection = [{
   }
 ];
 
+let finishedArray = [{
+  title: 'finished task',
+  description: 'finished description'
+}];
 
-// создает объект, добавляет его в массив, очищает поле
+// создает объект, добавляет его в массив
 function addTask() {
   let title = document.querySelector('#title'),
     description = document.querySelector('#description');
@@ -21,27 +30,28 @@ function addTask() {
     description: description.value,
   };
 
-  tasksCollection.push(taskObj);
+  tasksArray.push(taskObj);
 
-  createTask(title.value, description.value);
-  renderTasks();
+  createTask(title.value, description.value, tasksWrapper);
+  renderCount(tasksCount, tasksArray);
 
+  // очищаем поля
   title.value = '';
   description.value = '';
-
-  console.log(tasksCollection);
+  console.log(tasksArray);
 }
 
-// выводит title и description из начального массива
-function outputTasks() {
-  tasksCollection.map((task) => {
-    createTask(task.title, task.description);
+// выводит title и description из каждого элемента начального массива
+function outputTasks(array, wrapper) {
+  array.map((task) => {
+    createTask(task.title, task.description, wrapper);
   });
 }
 
-// формирует див и
-function createTask(title, description) {
-  const tasksWrapper = document.querySelector('#tasks');
+
+
+// формирует div и добавляет в html
+function createTask(title, description, wrapper) {
   let taskItem = document.createElement('div');
   taskItem.classList.add('tasks__item');
   taskItem.innerHTML = `<div class="tasks__info">
@@ -83,46 +93,75 @@ function createTask(title, description) {
       </svg>
     </button>
   </div>`;
-  tasksWrapper.append(taskItem);
+  wrapper.append(taskItem);
+  // console.log(`title ${title}, description ${description}, wrapper ${wrapper}`);
 }
 
 // обновляет количество заданий
-function renderTasks() {
-  let tasksCount = document.querySelector('#count');
-  tasksCount.innerHTML = tasksCollection.length;
+function renderCount(number, array) {
+  number.innerHTML = array.length;
 }
 
+outputTasks(tasksArray, tasksWrapper);
+outputTasks(finishedArray, finishedWrapper);
+renderCount(tasksCount, tasksArray);
+renderCount(finishedCount, finishedArray);
 
-
-
-outputTasks();
-renderTasks();
 
 addTaskBtn.addEventListener('click', () => {
   addTask();
-  renderTasks();
+  renderCount(tasksCount, tasksArray);
 });
 
-//добавить делегирование
-
-// при нажатии кнопки удаления удаляем элемент с html и из массива
-
-const deleteBtns = document.querySelectorAll('.tasks__delete');
-deleteBtns.forEach((item) => {
-  item.addEventListener('click', (e) => {
-    let taskItem = e.target.closest('#tasks .tasks__item');
-
+// при нажатии кнопки удаления удаляем элемент с html (делегирование) и из массива
+tasksWrapper.addEventListener('click', (event) => {
+  if (event.target && event.target.matches('.tasks__delete')) {
+    let taskItem = event.target.closest('.tasks__item');
     let delTitle = taskItem.querySelector('.tasks__title').textContent;
-    // let delDescr = taskItem.querySelector('.tasks__descr').textContent;
-    let delItem = tasksCollection.find(taskIitem => taskIitem.title === delTitle);
-    console.log(delItem);
-    tasksCollection = tasksCollection.filter(item => item !== delItem);
-    console.log(tasksCollection);
-    // console.log(taskItem.querySelector('.tasks__descr').value);
-
+    let delItem = tasksArray.find(taskIitem => taskIitem.title === delTitle);
+    tasksArray = tasksArray.filter(item => item !== delItem);
+    console.log(tasksArray);
     if (taskItem) {
       taskItem.remove();
-      renderTasks();
+      renderCount(tasksCount, tasksArray);
     }
-  });
+  }
+});
+
+// Как не дублируя предыдущий блок сделать addEventListener универсальным?
+finishedWrapper.addEventListener('click', (event) => {
+  if (event.target && event.target.matches('.tasks__delete')) {
+    let taskItem = event.target.closest('.tasks__item');
+    let delTitle = taskItem.querySelector('.tasks__title').textContent;
+    let delItem = finishedArray.find(taskIitem => taskIitem.title === delTitle);
+    finishedArray = finishedArray.filter(item => item !== delItem);
+    console.log(finishedArray);
+    if (taskItem) {
+      taskItem.remove();
+      renderCount(finishedCount, finishedArray);
+    }
+  }
+});
+
+tasksWrapper.addEventListener('click', (event) => {
+  if (event.target && event.target.matches('.checkbox')) {
+
+    let taskItem = event.target.closest('.tasks__item');
+    let delTitle = taskItem.querySelector('.tasks__title').textContent;
+    let delDescr = taskItem.querySelector('.tasks__descr').textContent;
+
+    let delItem = tasksArray.find(taskIitem => taskIitem.title === delTitle);
+    tasksArray = tasksArray.filter(item => item !== delItem);
+    finishedArray.push(delItem);
+    console.log(tasksArray);
+    console.log(finishedArray);
+    if (taskItem) {
+
+      createTask(delTitle, delDescr, finishedWrapper);
+      taskItem.remove();
+
+      renderCount(tasksCount, tasksArray);
+      renderCount(finishedCount, finishedArray);
+    }
+  }
 });

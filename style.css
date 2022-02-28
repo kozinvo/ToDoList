@@ -172,6 +172,10 @@ body {
   opacity: 0.6;
 }
 
+#finished .tasks__checkbox {
+  display: none;
+}
+
 .custom-checkbox {
   display: -webkit-box;
   display: -ms-flexbox;

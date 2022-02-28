@@ -140,6 +140,10 @@ body {
 
 }
 
+#finished .tasks__checkbox {
+  display: none;
+}
+
 // Custom checkbox
 
 .custom-checkbox {
@@ -240,8 +244,6 @@ body {
       border: none;
 
     }
-
-    &__descr {}
 
     &__btns {
       flex-direction: column;
